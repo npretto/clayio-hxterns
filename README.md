@@ -3,9 +3,11 @@ clayio-hxterns
 
 Haxe externs for Clay.io js API
 
-Thise externs have been generated automatically with https://github.com/jgranick/buildhx so there may be errors.
+Thise externs are generated automatically by https://github.com/lordkryss/buildhx so there may be errors.
 
 If you want to regenerate them use `haxelib run buildhx clay.xml`
+
+Using my version of buildhx it also copies comments directly in the souce code, for now comments are not formatted as they should to give a proper autocompletation but they are still usefull if your IDE supports "go to definition" to get a quick look :)
 
 Installation
 ===========
