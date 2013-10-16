@@ -1,0 +1,414 @@
+<buildhx><output path="."/><class name="Clay.Achievement"><static-method name="showAll" params="options:Dynamic,callback:Dynamic" comment="/**Fetches all the achievements you've created for this game, and if the player has earned them or not.
+This is good motivation for users to try and get the remaining achievements
+@param [optional] (object) options - none to specify yet
+@param [optional] (function) callback
+		@arg (object) response
+			@property (bool) success true if achievement awarded, false otherwise
+			@property (truthy) error Boolean false if no error, String error message if error
+			@property (string) title Title of the achievement that was awarded
+		
+@example Clay.Achievement.fetchAll( {}, function( response ) {
+	console.log( response );
+} );
+*/"/><static-method name="fetchAll" params="options:Dynamic,callback:Dynamic" comment="/**Grabs an object of all the achievements you've created for this game, and if the player has earned them or not.
+@param [optional] (object) options - none to specify yet
+@param [optional] (function) callback
+		@arg (object) response
+			@property (bool) success true if achievement awarded, false otherwise
+			@property (truthy) error Boolean false if no error, String error message if error
+			@property (string) title Title of the achievement that was awarded
+@example Clay.Achievement.fetchAll();
+*/"/><static-method name="showAllCallback" params="obj:Dynamic,callbackId:Dynamic"/><static-method name="fetchAllCallback" params="obj:Dynamic,callbackId:Dynamic"/><method name="new" params="options:Dynamic" comment="/**@param [required] (object) options
+	@option (int) id Integer achievement ID. Given in developer dashboard for game after creating the achievement
+	@option (string) jwt JSON Web Token (hashed object) if you have the encryption option on for your game
+@example new Clay.Achievement( { id: 1 } );
+*/"/><method name="award" params="callback:Dynamic" comment="/**Awards this object's achievement to a user. If they aren't logged into a Clay.io account,
+it is stored with their IP Address and granted to them when they signup.
+@param [optional] (function) callback
+	@arg (object) response
+		@property (bool) success true if achievement awarded, false otherwise
+		@property (truthy) error Boolean false if no error, String error message if error
+		@property (string) title Title of the achievement that was awarded
+		@property (string) description Description of the achievement that was awarded
+		@property (int) points The amount of points the achievement is worth
+		@property (truthy) icon False if no icon specified (in developer dashboard) or the full URL to the icon if it was specified 
+		@property (boolean) showExternally This is false if you set the option (in developer dashboard) to hide achievements when not playing from the Clay subdomain, true otherwise
+@example ( new Clay.Achievement( { id: 1 } ) ).award( function( response ) {
+	if( response.success )
+		console.log( response.title + &quot: &quot response.description )
+	else
+		console.log( &quotError: &quot + response.error );
+};
+*/"/><method name="show" params="obj:Dynamic,callbackId:Dynamic"/><method name="requestFacebook" params="obj:Dynamic"/></class><class name="Clay.Advertisement"><method name="new" params="options:Dynamic" comment="/**Creates and displays an advertisement
+@param [required] (object) options
+	@option [optional] (string) size Size of the ad. Choose from '160x600', '728x90', '300x250', '120x600', '200x200', '468x60', '125x125'
+	@option [optional] (object) position Positioning for the ad. Pass two of the properties: `left`, `right`, `top`, `bottom`. 
+														Pass a static number for pixels, or a relative number followed by a %
+														Passing 'center' as the `reference` property, with `left: 50%`, `top: 50%` will center the ad
+														The `parent` property defaults to document, but can be set to a DOM element to position relative to the canvas
+	@option [optional] (integer) refreshInterval Number of seconds to refresh the ad after. Must be a value greater than 30 seconds
+	@option [optional] (string) devices Select the devices the ad should show on. Options are: 'all', 'mobile', and 'desktop'
+	@option [optional] (boolean) display Defaults to true, if set to false, the advertisement won't be displayed until the &quotshow&quot method is called
+@example new Clay.Advertisement( { size: '125x125', position: { left: 50%, top: 50% } } );
+*/"/><method name="setRefreshInterval" params="seconds:Dynamic"/><method name="parsePosition"/><method name="getOffset" params="el:Dynamic"/><method name="checkFormat"/><method name="show" comment="/**Call to show the advertisement
+*/"/><method name="hide" comment="/**Call to hide the advertisement
+*/"/><method name="refresh" comment="/**Call to load a new advertisement in the same place. Works once every 30 seconds max
+*/"/><method name="setPosition" params="position:Dynamic" comment="/**Move the advertisement after you've intiated it
+@param [required] (object) position Positioning for the ad. Pass two of the properties: `left`, `right`, `top`, `bottom`. 
+														Pass a static number for pixels, or a relative number followed by a %
+														Passing 'center' as the `reference` property, with `left: 50%`, `top: 50%` will center the ad
+														The `parent` property defaults to document, but can be set to a DOM element to position relative to the canvas
+@example advertisement.setPosition( { left: 50%, top: 50% } );
+*/"/><method name="updatePosition"/></class><class name="Clay.Broadcast"><method name="new"/><method name="show" params="message:Dynamic"/></class><class name="Clay.Callbacks"><static-method name="add" params="fn:Dynamic"/><static-method name="execute" params="id:Dynamic,args:Dynamic"/></class><class name="Clay.Events"><static-method name="addEvent" params="type:Dynamic,listener:Dynamic,useObject:Dynamic,removeListener:Dynamic,obj:Dynamic,removeGroup:Dynamic"/><static-method name="removeEvent" params="type:Dynamic,listener:Dynamic,useObject:Dynamic,obj:Dynamic"/><static-method name="triggerEvent" params="name:Dynamic,element:Dynamic"/><static-method name="socketListen" params="type:Dynamic,listener:Dynamic,method:Dynamic,removeListener:Dynamic"/><static-method name="socketRemove" params="type:Dynamic,listener:Dynamic"/><static-method name="socketEmit" params="type:Dynamic,method:Dynamic,data:Dynamic,instanceId:Dynamic,callbackId:Dynamic"/></class><class name="Clay.Facebook"><static-method name="invite" params="options:Dynamic,callback:Dynamic" comment="/**Connects with Facebook and lists the user's friends, allowing them to individually select friends to invite to play your game. 
+Once they hit the &quotInvite&quot button, a message will be posted on their friends wall telling them about your game.
+@param [required] (object) options
+	@option (string) caption The message that is posted to the users wall (along with a link to your game and the game's description). By default this is &quotCome play GAMENAME with me!&quot
+	@option (string) id DOM element id. If passed, the invite iframe will be put in that element. If not passed, it will be opened in the modal window.
+@param [optional] (function) callback Called when at least one invite is successfully sent
+@example Clay.Facebookinvite( { caption: &quotCome play me in this sweet game!&quot }, function() {
+	console.log( &quotSuccessfully posted!&quot );
+};
+*/"/><method name="new" comment="/**There are no arguments to pass in the constructor
+*/"/><method name="post" params="options:Dynamic,callback:Dynamic" comment="/**Posts a new stream item to Facebook. The user must be logged into Clay, and has granted your game
+permission to post to their Facebook stream. If the user is either not logged in, or hasn't granted
+permission, Clay.io will take care of all of that for you.
+@param [required] (object) options You can pass any any of the options listed [here](http://developers.facebook.com/docs/reference/rest/stream.publish/)
+	@option (string) message A message to post (note, not all options are listed here, be sure to see the Facebook API docs linked to above)
+	@option (boolean) editable If set to true, the user will be able to edit the message they are posting
+@param [optional] (function) callback
+	@arg (object) response
+		@property (bool) success true if stream message was posted, false otherwise
+		@property (truthy) error Boolean false if no error, String error message if error
+@example ( new Clay.Facebook() ).post( { message: &quotTesting!&quot }, function( response ) {
+	if( !response.success )
+		console.log( &quotError: &quot + response.error );
+};
+*/"/></class><class name="Clay.Game"><static-method name="set" params="options:Dynamic,setCallback:Dynamic"/><static-method name="getData" comment="/**@return an object of data pertaining to your game
+	{ id: (int) game ID, name: (string) name of game }
+*/"/><static-method name="store" params="obj:Dynamic"/><static-method name="failedLoadCallback"/><static-method name="error" params="error:Dynamic"/></class><class name="Clay.Leaderboard"><method name="new" params="options:Dynamic" comment="/**@param [required] (object) options
+	@option (int) id Integer leaderboard ID. Given in developer dashboard for game after creating the leaderboard
+	@option (string) jwt JSON Web Token (hashed object) if you have the encryption option on for your game
+	@option (array) tabs An array of tab objects (a tab object can contain any of the options a typical leaderboard contains: id, data, filter, etc)
+	@option (string) html Custom HTML to show at the top of the leaderboard modal
+	@option (int) recent Specify an integer of seconds in the past to display scores from. ex. 3600 would show the last hour of scores
+	@option (array) filter An array of filters, similar to tabs, but can specify just a string for certain time intervals. ex. ['day', 'month', { title: &quotCustom Interval&quot, recent: 7200 }]
+	@option (int) limit How many scores to show
+	@option (boolean) self Shows only scores by the person viewing the leaderboard if set to true
+	@option (boolean) friends Shows only scores by the friends of the person viewing the leaderboard if set to true
+	@option (boolean) cumulative Sums up all scores per unique person over the given interval
+	@option (boolean) showPersonal Displays personal stats like their best rank and score
+@example new Clay.Leaderboard( { id: 1, tabs: [{ id: 2 }] } );
+*/"/><method name="setData" params="options:Dynamic"/><method name="fetch" params="options:Dynamic,callback:Dynamic" comment="/**Retrieves an array of leaderboard objects (name, score)
+If getRank is set to true, the response is an object with { data: [objects], rank: { rank: int, row: object } }
+@param [required] (object) options If you pass these in the constructor, you don't need to again here
+	@option (int) id Integer leaderboard ID. Given in developer dashboard for game after creating the leaderboard
+	@option (int) recent Specify an integer of seconds in the past to fetch scores from. ex. 3600 would return the last hour of scores
+	@option (int) limit How many scores to show
+	@option (boolean) self Returns only scores by the person viewing the leaderboard if set to true
+	@option (boolean) friends Returns only scores by the friends of the person viewing the leaderboard if set to true
+	@option (boolean) cumulative Sums up all scores per unique person over the given interval
+	@option (boolean) getRank If true, this method returns an object instead of an array. The object consists of the data property that is the array of score objects, and a rank object that contains an integer rank property, and an object row property holding score and name
+@example ( new Clay.Leaderboard( { id: 1 } ) ).fetch();
+*/"/><method name="show" params="options:Dynamic,callback:Dynamic" comment="/**Show the leaderboard modal window
+@param [required] (object) options If you pass these in the constructor, you don't need to again here
+	@option (int) id Integer leaderboard ID. Given in developer dashboard for game after creating the leaderboard
+	@option (array) tabs An array of tab objects (a tab object can contain any of the options a typical leaderboard contains: id, data, filter, etc)
+	@option (string) html Custom HTML to show at the top of the leaderboard modal
+	@option (string) sort Accepts 'asc' or 'desc' to sort the scores either ascending or descending
+	@option (int) recent Specify an integer of seconds in the past to display scores from. ex. 3600 would show the last hour of scores
+	@option (array) filter An array of filters, similar to tabs, but can specify just a string for certain time intervals. ex. ['day', 'month', { title: &quotCustom Interval&quot, recent: 7200 }]
+	@option (int) limit How many scores to show
+	@option (boolean) self Shows only scores by the person viewing the leaderboard if set to true
+	@option (boolean) friends Shows only scores by the friends of the person viewing the leaderboard if set to true
+	@option (boolean) cumulative Sums up all scores per unique person over the given interval
+	@option (boolean) showPersonal Displays personal stats like their best rank and score
+@example ( new Clay.Leaderboard( { id: 1 } ) ).show();
+*/"/><method name="returnJSON" params="obj:Dynamic,callbackId:Dynamic"/><method name="display" params="obj:Dynamic,callbackId:Dynamic"/><method name="hide" comment="/**Hides the leaderboard modal
+@example leaderboard.hide();
+*/"/><method name="setTabs" params="options:Dynamic" comment="/**Sets tabs for the leaderboard
+@param [required] (object) options
+	@option (array) An array of tabs objects
+*/"/><method name="setTab" params="options:Dynamic"/><method name="setTabCallback" params="obj:Dynamic"/><method name="removeEntry" params="options:Dynamic"/><method name="removeEntryCallback" params="obj:Dynamic"/><method name="share" params="obj:Dynamic"/><method name="getTable" params="obj:Dynamic"/><method name="post" params="options:Dynamic,callback:Dynamic" comment="/**Posts a score the this leaderboard object
+@param [required] (object) options
+	@option (int) score
+	@option (string) name - If a name is passed, it will be used in the name column. Otherwise Clay.io will request login/their name to use (if not logged in)
+	@option (boolean) hideUI - if set to true, the leaderboard posted notification will not show
+@param [optional] (function) callback
+	@arg (object) response
+		@property (bool) success true if score was posted, false otherwise
+		@property (truthy) error Boolean false if no error, String error message if error
+@example ( new Clay.Leaderboard( { id: 1 } ) ).post( { score: 500 }, function( response ) { ... } );
+*/"/><method name="postCallback" params="obj:Dynamic,callbackId:Dynamic"/><method name="challenge" params="obj:Dynamic,callback:Dynamic"/><method name="directLinkCallback" params="obj:Dynamic"/><method name="postChallenge"/><method name="requestFacebook" params="obj:Dynamic"/></class><class name="Clay.Messages"><static-method name="listen"/><static-method name="modalOpen"/><static-method name="compose" params="options:Dynamic,callback:Dynamic" comment="/**Opens the UI to send a message
+@param [optional] (object) options
+	@option (int/string) to User ID, or Username of the sender.
+	@option (string) message The message to send (will be filled into the textarea)
+@example Clay.Messages.compose( { to: 'austin' } );
+*/"/><static-method name="send" params="options:Dynamic,callback:Dynamic" comment="/**Sends a message
+@param [optional] (object) options
+	@option (int/string) to User ID, or Username of the sender.
+	@option (int) threadId ID of the thread. Defaults to creating a new thread
+	@option (string) message The message to send
+@example Clay.Messages.send( { to: austin, message: &quotTest&quot } );
+*/"/><static-method name="sendCallback" params="obj:Dynamic,callbackId:Dynamic"/><static-method name="getTabs" params="currentTab:Dynamic"/><static-method name="show" params="options:Dynamic,callback:Dynamic"/><static-method name="showCallback" params="obj:Dynamic,callbackId:Dynamic"/><static-method name="displayMessage" params="message:Dynamic,justNow:Dynamic"/><static-method name="showAll" params="options:Dynamic,callback:Dynamic"/><static-method name="showAllCallback" params="obj:Dynamic,callbackId:Dynamic"/></class><class name="Clay.Offline"><static-method name="showWarning" params="msg:Dynamic"/><static-method name="save" params="type:Dynamic,action:Dynamic,key:Dynamic,data:Dynamic,unique:Dynamic"/><static-method name="fetch" params="type:Dynamic,action:Dynamic,key:Dynamic"/><static-method name="sync"/></class><class name="Clay.Payment"><method name="new"/><method name="addItem" params="options:Dynamic,callback:Dynamic" comment="/**Adds an item to the user's cart
+@param [required] (object) options
+	@option (int) id Item ID. Given in developer dashboard for game after creating the item
+@param [optional] (function) callback called when item has been added to cart
+	@arg (object) response
+		@property (bool) success true if item was successfuly added, false otherwise
+		@property (truthy) error Boolean false if no error, String error message if error
+@example (new Clay.Payments()).addItem( { id: 1 }, function( response )
+{
+	console.log( response );
+}
+*/"/><method name="addCustomItem" params="obj:Dynamic,callback:Dynamic"/><method name="addItemStore" params="obj:Dynamic,callbackId:Dynamic"/><method name="getItemIds" comment="/**Fetches the ids of items the user playing your game 'owns'
+@return (array) items Array of item ids. Ex. [1, 5, 6, 7]
+*/"/><method name="getItemsForURL"/><method name="removeItem" params="options:Dynamic" comment="/**Removes an item from the users cart. If the quantity is greater than one, it just reduces the quantity by 1
+@param [required] (object) options
+	@option (int) id Item ID. Given in developer dashboard for game after creating the item
+*/"/><method name="checkout" params="options:Dynamic,callback:Dynamic" comment="/**Initiates the checkout sequence within Clay.io where the user is asked to confirm the purchase, then directed through the payment processors
+@param [optional] (object) options
+	@option (string) id Specify if you do not want to use the standard Clay.io UI. Pass the DOM element ID you want the payment box to go in
+@param [optional] (function) callback Called when either purchase has successfully gone through, or if there was an error/canceled process
+	@arg (object) response
+		@property (bool) success True if the user went through the whole process without generating an error
+		@property (truthy) error Boolean false if no error, String error message if error
+		@property (string) status Info about the payments current status (ex. pending) - this still needs to be normalized on our end. Give us a nudge if we haven't done it yet
+		@property (bool) completed Boolean if the payment was approved right away or not
+		@property (array) itemIds Array of Integers: The items they ended up purchasing - this could be different than the items you pass since they can optionally remove items
+*/"/><method name="pay" params="callback:Dynamic"/><method name="paymentCallback" params="json:Dynamic,callback:Dynamic"/></class><class name="Clay.Ratings"><method name="new" params="options:Dynamic" comment="/**Call to open the ratings modal. The ratings modal lets users rate and comment on your game.
+@param [required] (object) options
+	@option (int) id DOM element id. If passed, the rating iframe will be put in that element. If not passed, it will be opened in the modal window.
+@example new Clay.Ratings()
+*/"/></class><class name="Clay.Rooms"><method name="new" params="options:Dynamic" comment="/**Instantiates the Rooms object
+@param [optional] (object) options
+	@option (function) fullCallback Called when a room is full (for any user)
+	@option (function) callback Called when rooms are first fetched
+	@arg (object) response
+		@property (bool) success true if the room was successfully created, false otherwise
+		@property (truthy) error Boolean false if no error, String error message if error
+		@property (int) id A unique ID of the room that was created, starting from 0
+		@property (int) count The number of people in the room
+		@property (int) max The maximum number of players allowed in a room (specified in Developer Game Settings)
+		@property (object) instance A reference to the Clay.Rooms instance (so you can use response.instance.leaveRoom() if you'd like)
+		@property (string) name The name created by a user for the room
+*/"/><method name="setFullCallback" params="fullCallback:Dynamic"/><method name="show" params="callback:Dynamic" comment="/**Shows the rooms list modal
+@param [optional] (function) callback Called when the rooms modal is done loading
+	@arg rooms (array) Array of all non-full rooms. Each array element contains objects with the following properties
+		@property (int) count Number of players currently in the room
+		@property (int) id Unique ID of the room
+		@property (int) max The maximun number of users allowed in the room
+		@property (array) members Array of objects with the property *name* being their name
+		@property (string) name The name of the room 
+*/"/><method name="fetchCallback" params="obj:Dynamic,callbackId:Dynamic"/><method name="getRooms" comment="/**Fetches an array of all rooms currently created
+@return (array) Array of all non-full rooms. Each array element contains objects with the following properties
+	@property (int) count Number of players currently in the room
+	@property (int) id Unique ID of the room
+	@property (int) max The maximun number of users allowed in the room
+	@property (array) members Array of objects with the property *name* being their name
+	@property (string) name The name of the room 
+*/"/><method name="createRoom" params="options:Dynamic,callback:Dynamic" comment="/**Allows you to manually create the room (the modal flow provides all of this for a user, so this is just if you want to manually create one)
+@param [optional] (object) options
+	@option (string) name The name of the room. If left blank, it grabs the value from the rooms text field
+@param [optional] (function) callback Called when room is created
+	@arg room (array) An object with the following properties
+		@property (int) count Number of players currently in the room
+		@property (int) id Unique ID of the room
+		@property (int) max The maximun number of users allowed in the room
+		@property (array) members Array of objects with the property *name* being their name
+		@property (string) name The name of the room 
+*/"/><method name="createRoomCallback" params="obj:Dynamic,callbackId:Dynamic"/><method name="getRoomTd" params="obj:Dynamic,inRoom:Dynamic,tr:Dynamic,returnHTML:Dynamic"/><method name="joinRoom" params="options:Dynamic,callback:Dynamic" comment="/**Allows you to manually have a user join a room
+@param [optional] (object) options
+	@option (int) id The ID of the room for them to join
+@param [optional] (function) callback Called when room is joined
+	@arg room (array) An object with the following properties
+		@property (int) count Number of players currently in the room
+		@property (int) id Unique ID of the room
+		@property (int) max The maximun number of users allowed in the room
+		@property (array) members Array of objects with the property *name* being their name
+		@property (string) name The name of the room 
+*/"/><method name="joinRoomCallback" params="obj:Dynamic,callbackId:Dynamic"/><method name="leaveRoom" params="callback:Dynamic" comment="/**Allows you to manually remove a user from a room
+@param [optional] (object) options
+	@option (int) id The ID of the room for them to join
+@param [optional] (function) callback Called when room is joined
+	@arg (object) response
+		@property (bool) success true if the user was successfully removed from the room, false otherwise
+		@property (truthy) error Boolean false if no error, String error message if error
+*/"/><method name="leaveRoomCallback" params="obj:Dynamic,callbackId:Dynamic"/><method name="refresh" params="obj:Dynamic"/><method name="roomFull" params="obj:Dynamic"/><method name="refreshTd" params="id:Dynamic,inRoom:Dynamic"/></class><class name="Clay.Screenshot"><method name="new" params="options:Dynamic,callback:Dynamic" comment="/**Instantiates the Screenshot object and starts the flow unless you specify otherwise
+@param [optional] (object) options
+	@option (boolean) prompt Set to false if you don't want the Screenshot flow to start when instantiating (ie you want to do something with the screenshot in the background)
+@example new Clay.Screenshot();
+*/"/><method name="prompt" params="callback:Dynamic" comment="/**Manually call the prompt modal to show (prompts a user to save screenshot to Clay.io)
+*/"/><method name="save" params="options:Dynamic,callback:Dynamic" comment="/**Manually saves a screenshot to the Clay.io server (and is associated with the user's account)
+@param [optional] (object) options
+	@option (string) id By default, we select the first canvas on the page to take a screenshot of -- you can specify a different canvas by passing the DOM id
+	@option (boolean) prompt Set to false if you don't want the Screenshot flow to start when instantiating (ie you want to do something with the screenshot in the background)
+	@option (boolean) hideUI Set false if you don't want the notification to show
+@param [optional] (function) callback Called when response is received from server
+	@arg (object) response
+		@property (bool) success true if the screenshot was successfully posted, false otherwise
+		@property (truthy) error Boolean false if no error, String error message if error
+		@property (string) url URL pointing to the screenshot page on Clay.io
+		@property (string) imageSrc Direct URL to the image
+@example ( new Clay.Screenshot() ).save( function( response ) {
+	console.log( response );
+} );
+*/"/><method name="saveCallback" params="obj:Dynamic,callbackId:Dynamic"/></class><class name="Clay.Social"><method name="post" params="options:Dynamic,callback:Dynamic"/><method name="postCallback" params="obj:Dynamic,callbackId:Dynamic"/><method name="requestPermission" params="obj:Dynamic,callbackId:Dynamic"/><method name="connect" params="use:Dynamic,callback:Dynamic"/></class><class name="Clay.Stats"><static-method name="log" params="options:Dynamic" comment="/**Logs a custom statistic. The graph can be viewed in the developer area for your game, under 'stats'
+@param [required] (object) options
+	@option (string) name The name/key to associate this stat with
+	@option (int) quantity  Defaults to 1 -- a value to associate with the stat
+@example Clay.Stats.logStat( 'talkedToNPC', 1 );
+*/"/><static-method name="logStat" params="options:Dynamic"/><static-method name="level" params="options:Dynamic" comment="/**For statistics associated with game levels. You can start and end levels to gather
+statistics on dropout rate, time to complete, etc...
+@param [required] (object) options
+	@option (string) action One of: 'start', 'pass', 'fail'
+	@option (string) level A unique identifier for the current level
+@example Clay.Stats.level( { action: 'start', level: 1 } );
+*/"/></class><class name="Clay.Stream"><method name="new"/><method name="post" params="options:Dynamic,callback:Dynamic" comment="/**Posts a message to the user's Clay.io stream. They must be logged in for this to work. A login flow
+is brought up if they are not logged in
+@param [required] (object) options
+	@option (string) message The stream message to post
+	@option (boolean) editable If set to true, the user will be able to edit the message they are posting
+@param [optional] (function) callback
+	@arg (object) response
+		@property (bool) success true if message was posted, false otherwise
+		@property (truthy) error Boolean false if no error, String error message if error
+@example ( new Clay.Stream() ).post( { message: &quotTesting!&quot, function( response ) {
+	if( !response.success )
+		console.log( &quotError: &quot + response.error );
+};
+*/"/><method name="postCallback" params="obj:Dynamic,callbackId:Dynamic"/></class><class name="Clay.Suggestions"><method name="new" params="options:Dynamic" comment="/**Call to open the suggestions modal. The game suggestions modal displays 3 recommended games. Each time one is clicked you earn credits that will get you clicks to your game from others. More info [here](http://clay.io/docs/suggestions)
+@param [required] (object) options
+	@option (int) id DOM element id. If passed, the rating iframe will be put in that element. If not passed, it will be opened in the modal window.
+@example new Clay.Suggestions()
+*/"/></class><class name="Clay.Tools"><static-method name="broadcast" params="message:Dynamic"/></class><class name="Clay.Twitter"><method name="new" comment="/**There are no arguments to pass in the constructor
+*/"/><method name="post" params="options:Dynamic,callback:Dynamic" comment="/**Posts a Tweet. The user must be logged into Clay, and has granted your game
+permission to post to their Twitter Account. If the user is either not logged in, or hasn't granted
+permission, Clay.io will take care of all of that for you.
+@param [required] (object) options
+	@option (boolean) editable If set to true, the user will be able to edit the message they are posting
+	@option (string) message A <= 140 character long message to tweet
+@param [optional] (function) callback
+	@arg (object) response
+		@property (bool) success true if tweet was posted, false otherwise
+		@property (truthy) error Boolean false if no error, String error message if error
+@example ( new Clay.Twitter() ).post( { message: &quotTesting!&quot, function( response ) {
+	if( !response.success )
+		console.log( &quotError: &quot + response.error );
+};
+*/"/></class><class name="Clay.UI"><static-method name="error" params="error:Dynamic,id:Dynamic"/><static-method name="modalsOpen" comment="/**Returns the number of Clay.io modals that are currently open
+@return (int) number of modals open
+*/"/><static-method name="notificationsOpen" comment="/**Returns the number of Clay.io notifications that are currently open
+@return (int) number of notifications open
+*/"/><static-method name="closeAllUI" comment="/**Closes all Clay.io UI elements
+*/"/><static-method name="closeModal" params="id:Dynamic,callEvent:Dynamic" comment="/**Closes the most recently opened modal window, or the id passed in options
+@param [optional] (object) options
+	@option (string) id The DOM id of the modal to close (ex. clay-login-wrapper)
+*/"/><static-method name="getDocumentSize" comment="/**@return (object) DOM document 'height' and 'width' in pixels
+*/"/><static-method name="getWindowSize" comment="/**@return (object) Window 'height' and 'width' in pixels
+*/"/><static-method name="getTabsHTML" params="tabs:Dynamic,id:Dynamic"/><static-method name="insertIframe" params="iframe:Dynamic,contentInner:Dynamic"/><static-method name="createModal" params="options:Dynamic,callback:Dynamic" comment="/**Creates and displays a modal window
+@param [required] (object) options
+	@option (string) title Title of modal window
+	@option (string) html HTML for the inner content
+	@option (string) id DOM id to give the wrapper element
+@example Clay.UI.createModal( { title: 'Title', html: &quot<div>Here's some HTML</div>&quot } )
+*/"/><static-method name="updateModal" params="options:Dynamic,callback:Dynamic" comment="/**Updates a modal window
+@param [required] (object) options
+	@option (string) title Title of modal window
+	@option (string) html HTML for the inner content
+	@option (string) id DOM id to give the wrapper element
+@example Clay.UI.updateModal( { title: 'Title', html: &quot<div>Here's some HTML</div>&quot } )
+*/"/><static-method name="centerModal" params="id:Dynamic"/><static-method name="handleEvents" params="events:Dynamic"/><static-method name="createNotification" params="options:Dynamic" comment="/**Creates and displays a notification message (this is used for things like achievements).
+@param [required] (object) options
+	@option (string) title Title of notification
+	@option (string) html HTML for the inner content
+	@option (truthy) icon Boolean false if no icon, URL to icon if you want to specify one
+	@option (string) type We use two values, 'notification'|'achievement' -- the style differs a bit between the two. Classes are set with the type (ex. &quotclay-&quot + type)
+	@option (string) id DOM id to assign to wrapper (it's assigned as &quotclay-&quot + type + &quot-&quot + id). Defaults to 'notification'
+	@option (int) delay Notification will be closed after delay ms. Set to 0 to not close at all
+@example Clay.UI.createNotification( { title: 'Title', html: &quot<div>Here's some HTML</div>&quot } )
+*/"/><static-method name="closeNotification" params="id:Dynamic" comment="/**Closes a notification
+@param [required] (string) id DOM id assigned to wrapper (it's assigned as &quotclay-&quot + type + &quot-&quot + id)
+*/"/><static-method name="showPopupNotifier" params="site:Dynamic"/><static-method name="hidePopupNotifier" params="site:Dynamic"/><static-method name="addToContainer" params="html:Dynamic,callback:Dynamic,DOMid:Dynamic" comment="/**Adds an element to the clay container div
+@param [required] (string) id DOM id assigned to wrapper (it's assigned as &quotclay-&quot + type + &quot-&quot + id)
+*/"/><static-method name="removeElement" params="element:Dynamic"/><static-method name="setCanvas" params="canvas:Dynamic,callback:Dynamic"/></class><class name="Clay.canvasInput"><method name="new" params="options:Dynamic"/><method name="destroy"/><method name="click" params="e:Dynamic"/><method name="inBox" params="x:Dynamic,y:Dynamic"/><method name="focus"/><method name="unfocus"/><method name="refresh"/></class><class name="Clay.canvasText"><method name="new" params="canvas:Dynamic,options:Dynamic"/><method name="destroy"/><method name="focus"/><method name="unfocus"/><method name="mouseMove" params="e:Dynamic"/><method name="keyDown" params="e:Dynamic"/><method name="mapKeyPressToActualCharacter" params="isShiftKey:Dynamic,characterCode:Dynamic"/></class><class name="Clay.canvasPassword"><method name="new" params="canvas:Dynamic,options:Dynamic"/></class><class name="Clay.canvasSubmit"><method name="new" params="canvas:Dynamic,options:Dynamic"/><method name="focus"/></class><class name="Clay.User"><static-method name="storeUserData" params="dataKey:Dynamic,data:Dynamic,callback:Dynamic"/><static-method name="fetchUserDataLocal" params="key:Dynamic,callback:Dynamic"/><method name="new"/><method name="socketListen"/><method name="setUsername" params="username:Dynamic" comment="/**Gives the player a custom name, instead of Anonymous if they're not logged into Clay.io. By default, the user is able to choose this in the Clay login modal
+@param [required] (string) username The name you want to give them (will show up on things like leaderboards)
+*/"/><method name="hasRated"/><method name="saveUserData" params="dataKey:Dynamic,data:Dynamic,callback:Dynamic" comment="/**Saves the specified saved user data to the server
+Note: you cannot save data under the keys &quotuser&quot, &quotgame&quot, or &quot_id&quot
+Usage: User.saveUserData('level1Score', '51000', function( response ) { console.log( response.success ); }  ... $ true
+@param (string) key the key that you'd like to save the data to
+@param (object) data JSON-safe data for saving
+@param [optional] (function) callback Called when user data is saved
+	@arg (object) response Contains response data
+		@option (string) error null if no error
+		@option (boolean) success true if data successfully saved
+		@option (multi) data contains the data you just saved
+		@option (string) key contains the key that you just saved data under
+*/"/><method name="saveUserDataCallback" params="response:Dynamic,callbackId:Dynamic"/><method name="fetchUserData" params="key:Dynamic,callback:Dynamic" comment="/**Grabs the specified saved user data from the server
+Usage: User.fetchUserData('level1Score', function( repsonse) { console.log( response.data ); } )  ... $ '51000'
+@param (string) key the key specifying the data you'd like to fetch
+@param [optional] (function) callback Called when user data is received from server
+	@arg (object) response Contains response data
+		@option (string) error null if no error
+		@option (multi) data contains the data you just requested
+		@option (string) key contains the key that you just requested data for
+*/"/><method name="fetchUserDataCallback" params="response:Dynamic,callbackId:Dynamic"/><method name="fetchItems" params="callback:Dynamic" comment="/**Grabs all the items this player has in your game
+@param [required] (function) callback
+	@arg (array) items An array of item ids they have
+*/"/><method name="fetchItemsCallback" params="data:Dynamic,callbackId:Dynamic"/><method name="grantItem" params="options:Dynamic,callback:Dynamic" comment="/**Grants the user an item (created in the developer dashboard for your game)
+@param [optional] (object) options
+	@option (int) id The item's id (given to you after creating it)
+	@option (int) quantity How many of the item you want to give
+@param [optional] (function) callback Called when item is granted
+	@arg (array) response An object with the following properties
+		@property (int) id The item's id
+		@property (int) quantity How many were given
+*/"/><method name="grantItemCallback" params="data:Dynamic,callbackId:Dynamic"/><method name="removeItem" params="options:Dynamic,callback:Dynamic" comment="/**Removes an item from the player's inventory
+@param [optional] (object) options
+	@option (int) id The item's id (given to you after creating it)
+	@option (int) quantity How many of the item you want to remove - pass 'all' to remove all of this item
+@param [optional] (function) callback Called when item is removed
+	@arg (array) response An object with the following properties
+		@property (int) id The item's id
+		@property (int) quantity How many were removed
+*/"/><method name="removeItemCallback" params="data:Dynamic,callbackId:Dynamic"/><method name="purchaseGame" params="callback:Dynamic" comment="/**If this isn't a free game, let them buy the game from within your game
+This is equivalent to adding an item with type: 'game', id: gameID, and calling checkout
+@param [optional] (function) callback Called when either purchase has successfully gone through, or if there was an error/canceled process
+	@arg (object) response
+		@property (bool) success True if the user went through the whole process without generating an error
+		@property (truthy) error Boolean false if no error, String error message if error
+		@property (string) status Info about the payments current status (ex. pending) - this still needs to be normalized on our end. Give us a nudge if we haven't done it yet
+		@property (bool) completed Boolean if the payment was approved right away or not
+		@property (array) itemIds Array of Integers: The items they ended up purchasing - this could be different than the items you pass since they can optionally remove items
+*/"/><method name="hasInstalled" comment="/**@return (boolean) installed If the user has &quotinstalled&quot (or purchased if it's not a free game) the game or not
+*/"/><method name="getName"/><method name="onUserReady" params="callback:Dynamic" comment="/**Called when the user is logged in (and we have a name for them)
+@param [optional] (function) callback Called when the user has logged in (or entered their name)
+	@arg (object) response
+		@property (string) identifier A unique identifier associated with the user
+
+*/"/><method name="doLogin" params="obj:Dynamic"/><method name="setLoginTab" params="tab:Dynamic"/><method name="login" params="options:Dynamic,callback:Dynamic,signup:Dynamic" comment="/**Manually triggers the flow for a user to login, signup, or enter their name within the modal window
+@param [optional] (object) options
+	@option (string) id Specify if you do not want to use the standard Clay.io UI. Pass the DOM element ID you want the login box to go in
+	@option (bool) signup If set to true, the signup tab is opened initially (rather than login)
+@param [optional] (function) callback Called when either the login was successful, or if there was an error/canceled process
+	@arg (object) response
+		@property (bool) success True if the user logged in successfully
+		@property (truthy) error Boolean false if no error, String error message if error
+@param [optional] (boolean) signup If set to true, the signup tab is opened initially (rather than login)
+*/"/><method name="logout" params="options:Dynamic,callback:Dynamic" comment="/**Manually triggers the flow for a user to login, signup, or enter their name within the modal window
+@param [optional] (object) options
+	@option (string) id Specify if you do not want to use the standard Clay.io UI. Pass the DOM element ID you want the logout box to go in
+@param [optional] (function) callback Called when either the logout was successful, or if there was an error/canceled process
+	@arg (object) response
+		@property (bool) success True if the user logged out successfully
+		@property (truthy) error Boolean false if no error, String error message if error
+*/"/><method name="canvasLogin"/><method name="canvasSignup"/><method name="showLoginCanvas"/><method name="showSignupCanvas"/><method name="signupCallback" params="obj:Dynamic"/><method name="signup" params="options:Dynamic,callback:Dynamic" comment="/**Manually triggers the flow for a user to signup, within the modal window. Alias for Clay.Player.login( callback, true );
+@param [optional] (function) callback Called when either the login was successful, or if there was an error/canceled process
+	@arg (object) response
+		@property (bool) success True if the user signed up in successfully
+		@property (truthy) error Boolean false if no error, String error message if error
+*/"/><method name="sendLogin" params="json:Dynamic"/><method name="requireLogin" params="callback:Dynamic,reqLoggedIntoClay:Dynamic" comment="/**Does a check if they're logged in - calls the callback if they are, 
+forces them to login if they aren't (then calls the callback after login)
+Use this for anything is your game where you need the user to be logged in
+@param [required] (function) callback Called immediately if the user is logged in, or where they login otherwise
+@param [optional] (boolean) requireLoggedIntoClay Set true if you only want this called if they are logged into a clay.io account (ie they aren't anonymously 'logged in' with just their name)
+*/"/></class></buildhx>
