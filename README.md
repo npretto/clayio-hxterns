@@ -2,7 +2,10 @@ clayio-hxterns
 ==============
 
 Haxe externs for Clay.io js API
-These have been generated automatically so there may be errors.
+
+Thise externs have been generated automatically with https://github.com/jgranick/buildhx so there may be errors.
+
+If you want to regenerate them use `haxelib run buildhx clay.xml`
 
 Installation
 ===========
